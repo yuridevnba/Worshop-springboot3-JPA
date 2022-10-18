@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.educandoweb.course.entities.User;
 
-//para indentificar que a classe é um recurso web que é implementado por um controlador west
-// é preciso colocar uma anotation.
+//para indentificar que a classe é um recurso web que é implementado por um controlador rest
+// é preciso colocar uma anotation. @RestController.
 
 // requestMapping é o nome do recurso
-//"" é o caminho do recurso. ou o nome, como o recurso está relacionado á entidade users, int ele deu o nome do recurso com "/users"
+//"/users" é o caminho do recurso. ou o nome, como o recurso está relacionado á entidade users, int ele deu o nome do recurso com "/users"
 // criou um método que vai ser um endpoints para acessar os usuários.
-// pra indica que esse étodo responde a requisição do tipo get do HTTP.
+// pra indica que esse método responde a requisição do tipo get do HTTP.
 @RestController
 @RequestMapping(value="/users")
 public class UserResource {
