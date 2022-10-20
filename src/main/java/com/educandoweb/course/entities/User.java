@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +29,8 @@ private String email;
 private String phone;
 private String password;
 
+// deu um erro que é uma associação de mão dupla, dentro do pedido se tem usuários e dentro do usuários se tem os pedidos, aí a biblioteca jackson dá um lupi.
+@JsonIgnore
 // um para muitos, pesquisar o usuário e ver quantos pedidos esse usuário fez.
 @OneToMany(mappedBy = "cliente")// nome do atributo que está do outro lado da associação.
 private List<Order>orders= new ArrayList<>();
