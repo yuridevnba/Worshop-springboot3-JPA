@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.educandoweb.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +25,7 @@ public class Order implements Serializable {
 	private Long id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd 'T' HH:mm:ss 'Z'", timezone = "GMT")
 	private Instant moment;
+	private Integer orderstatus; // integer só para trabalhar com o bd.
 // o relacionamento entre pedidos e clientes vai ser necessário uma chave estrangeira,
 // o jpa vai transformar isso em chave estrangeira quando tiver o @ManyToOne. associação pedidos (muito) usuário(um), muito para um.
 //@JsonIgnore
@@ -36,10 +37,12 @@ public class Order implements Serializable {
 
 	}
 
-	public Order(Long id, Instant moment, User cliente) {
+	public Order(Long id, Instant moment,OrderStatus orderstatus, User cliente) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderstatus(orderstatus);
+		//this.orderstatus=orderstatus;
 		this.cliente = cliente;
 	}
 
@@ -57,6 +60,18 @@ public class Order implements Serializable {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+	
+	
+
+	public OrderStatus getOrderstatus() { // pegando um número inteiro e convertendo para orderstatus.
+		return OrderStatus.valueOf(orderstatus);
+	}
+
+	public void setOrderstatus(OrderStatus orderstatus) { // recebe um orderstatus e guarda um inteiro.
+		if(orderstatus != null) {
+		this.orderstatus = orderstatus.getCode(); // pegar um número inteiro correspondente a orderstatus.
+	}
 	}
 
 	public User getCliente() {
