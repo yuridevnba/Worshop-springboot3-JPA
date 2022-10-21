@@ -30,7 +30,7 @@ public class Order implements Serializable {
 // o jpa vai transformar isso em chave estrangeira quando tiver o @ManyToOne. associação pedidos (muito) usuário(um), muito para um.
 //@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "cliente_id")
+	@JoinColumn(name = "cliente_id")// na tabela de pedidos do banco de dados,vai ter uma chave estrangeira que é o client_id que vai conter o id do usuário associado a esse pedido.
 	private User cliente;
 
 	public Order() {
