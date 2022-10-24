@@ -38,6 +38,7 @@ public class Order implements Serializable {
 	@JoinColumn(name = "cliente_id")// na tabela de pedidos do banco de dados,vai ter uma chave estrangeira que é o client_id que vai conter o id do usuário associado a esse pedido.
 	private User cliente;
      
+	//@Fetch(FetchMode.JOIN)
 	@OneToMany(mappedBy="id.order")
 	
 	private Set<OrderItem>items = new HashSet<>();
@@ -108,6 +109,8 @@ public class Order implements Serializable {
 			return false;
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
+		
+		//
 	}
 
 }
