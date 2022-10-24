@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,13 +32,15 @@ private String description;
 private Double price;
 private String imgUrl;
 
-//@Transient
+
 @ManyToMany
-@JoinTable(name = "tb_product_category",
-joinColumns = @JoinColumn(name="product_id"),
-inverseJoinColumns = @JoinColumn(name ="category_id") ) // criou uma tabela de associação, e precisei falar qual vai ser o nome da chave estrangeira referente a tabela de produtos.tb vai ser necessário criar uma chave estrangeira das duas tabelas, q é produto e categoria.
+@JoinTable(name = "tb_product_category",joinColumns = @JoinColumn(name="product_id"),inverseJoinColumns = @JoinColumn(name ="category_id") ) // criou uma tabela de associação, e precisei falar qual vai ser o nome da chave estrangeira referente a tabela de produtos.tb vai ser necessário criar uma chave estrangeira das duas tabelas, q é produto e categoria.
 
 private Set<Category> categories = new HashSet<>(); // garantir que o mesmo produto não tenha uma ocorrência da mesma categoria.
+
+@OneToMany(mappedBy="id.product")
+// coleção de items da classe product. que vai precisar me devolver uma lista de order,não de orderitems.
+public Set<OrderItem>items= new HashSet<>();
 
 public Product() {
 	
@@ -92,6 +97,18 @@ public void setImgUrl(String imgUrl) {
 
 public Set<Category> getCategories() {
 	return categories;
+}
+@JsonIgnore
+public Set<Order> getOrders(){
+Set<Order> set = new HashSet<>();
+
+for(OrderItem x : items) {
+	set.add(x.getOrder());
+}
+// exemplo: o produto 3, tem 2 orderItem, precisa varrer a coleção de orderItem, e pra cada orderItem vai ser necessário pegar o order associado a ele.
+return set;
+
+
 }
 
 @Override

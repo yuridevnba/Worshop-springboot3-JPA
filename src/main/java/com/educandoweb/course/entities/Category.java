@@ -25,7 +25,7 @@ private Long id;
 private String name;
 
 @JsonIgnore
-//@Transient
+
 @ManyToMany(mappedBy = "categories")
 private Set<Product>products= new HashSet<>();
 

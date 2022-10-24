@@ -43,6 +43,7 @@ public Order getOrder() {
 public void setOrder(Order order) {
 	id.setOrder(order); // joga o id informado dentro do ordemItemPK
 }
+//@JsonIgnore
 public Product getProduct() {
 	return id.getProduct();
 }
