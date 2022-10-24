@@ -9,14 +9,14 @@ import com.educandoweb.course.entities.Product;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-@Embeddable
+@Embeddable //classe auxiliar composta.
 public class OderItemPK implements Serializable {
 // classe auxiliar de chave primária composta.
 	private static final long serialVersionUID = 1L;
 //vai ter uma referência para o produto e para o pedido.
 	
 	@ManyToOne
-	@JoinColumn(name = "order_id")
+	@JoinColumn(name = "order_id") // nome da chave estrangeira, na tabela de banco de dados relacional.
 	private Order order;
 	
 	@ManyToOne
