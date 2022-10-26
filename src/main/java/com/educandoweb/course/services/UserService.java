@@ -41,15 +41,21 @@ public class UserService {
 		}catch (DataIntegrityViolationException e) {
 			//e.printStackTrace();
 			throw new DataBaseException(e.getMessage());
+			
 		}
 		
 	}
 	
 	public User update(Long id, User obj) {
+		try {
 		//User entity=repository.getReferenceById(id);// instacia um usuário, mas n vai no banco de dados, só deixa monitorado com o jpa só pra trabalhar com ele, o findbyid tras o objeto no banco d dados.
 		User entity=findById(id);
 		updateData(entity,obj);
 		return repository.save(entity);
+		} catch(RuntimeException e) {
+			e.printStackTrace();
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	private void updateData(User entity, User obj) {
